@@ -3,7 +3,7 @@ title: "Assignment 1 - Marketing campaign report"
 format: 
     html:
         theme: litera
-    pdf:default
+    pdf: default
 editor: visual
 author: Duc Hoang
 ---
@@ -17,5 +17,5 @@ library(knitr)
 
 ```
 
-## 1. 
-
+## 1. Introduction
+For the last quarter, Marketing department had lauched a campaign of personalised marketing, calculate the marketing spent on each customers. This report will contrast customer acquisition metrics, such as store visits and transaction volumes, directly against their associated marketing expenditures to evaluate whether more marketing cost per customer bring about more benefits. It examines a comprehensive cross-section of our user base, evaluating cohorts ranging from new acquisitions to tenured accounts. The scope of observation includes market segmentation across individual consumers to enterprise clients.
