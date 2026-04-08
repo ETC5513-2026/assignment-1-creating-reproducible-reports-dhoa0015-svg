@@ -55,7 +55,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#research-objectives" id="toc-research-objectives" class="nav-link" data-scroll-target="#research-objectives">2. Research objectives</a></li>
   <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview">3. Dataset overview</a>
   <ul class="collapse">
-  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">Dataset description</a></li>
+  <li><a href="#data-cleaning-procedures" id="toc-data-cleaning-procedures" class="nav-link" data-scroll-target="#data-cleaning-procedures">Data cleaning procedures</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#detailed-description" id="toc-detailed-description" class="nav-link" data-scroll-target="#detailed-description">Detailed description</a></li>
   </ul></li>
   <li><a href="#analysis-result" id="toc-analysis-result" class="nav-link" data-scroll-target="#analysis-result">4. Analysis result</a></li>
   </ul>
@@ -105,14 +107,70 @@ ul.task-list li input[type="checkbox"] {
 <p>This report analyzes the collected dataset to evaluate the key drivers of financial performance and customer value.</p>
 <ul>
 <li>First, the investigation will focus on answering if there were <strong>a correlation exists between <span style="color:red">Marketing expense</span> and <span style="color:red">Gross revenue</span></strong>, in order to assess the financial efficiency of our promotional campaigns.</li>
-<li>Afterwards, <span style="color:red">Customer segments</span> were examined distinctively to <strong>identify differences in <span style="color:red">Revenue</span> across these segmentation</strong>, identifying the campaign’s most profitable target audiences.</li>
+<li>Afterwards, <strong><span style="color:red">Customer segments</span></strong> will be examined distinctively to <strong>identify differences in <span style="color:red">Revenue</span> across these segments</strong>, identifying the campaign’s most profitable target audiences.</li>
 </ul>
 </section>
 <section id="dataset-overview" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-overview">3. Dataset overview</h2>
+<section id="data-cleaning-procedures" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-procedures">Data cleaning procedures</h3>
+<p>The dataset is clearly not clean enough to build an analysis pipeline on. Here are the cleaning procedures specifically applied to this dataset:</p>
+<ul>
+<li><p><strong>Step 1: Set up a relative path to the dataset</strong>: In order for the report to function well across other devices, the path for the dataset have to be set to relative pathway.</p></li>
+<li><p><strong>Step 2: Format date field</strong>: For datasets involving <code>date/time</code> fields, the ultimate cleaning process is to set the value of these colunms into appropriate format. We are looking for <code>date</code> or <code>date/time</code> format depending on each dataset. The dataset originally contained inconsistent date formats within the <code>signup_date</code> field. To ensure accurate reporting and time-series analysis, all values have been standardized to a uniform <em>“YYYY-MM-DD format”</em>.</p></li>
+<li><p><strong>Step 3: Clean NA records</strong></p></li>
+</ul>
+<p>Take a look into the dataset, there are <strong>18 records</strong> missing a value in the <code>purchase_amount</code> field. Within this subset, two records include the <code>notes = returned</code> (<a href="#fig-na_purchase" class="quarto-xref">Figure&nbsp;1</a>). Further investigation indicates that the <code>purchase_amount</code> column tracks gross sales rather than net sales; this is evidenced by numerous other <code>returned</code> records that still retain their original, positive purchase values (<a href="#fig-return_data" class="quarto-xref">Figure&nbsp;2</a>). Consequently, we cannot accurately impute a zero value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-na_purchase" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-na_purchase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/NA_purchase_data.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-na_purchase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Records missing purchase amount value
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-return_data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-return_data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/return_data.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-return_data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Customers have had their purchases returned
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Also, to maintain consistency across the dataset, manual text entries of <code>N/A</code> within the notes column were standardized to the system’s official missing value format <code>NA</code> (<a href="#fig-na-notes" class="quarto-xref">Figure&nbsp;3</a>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-na-notes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-na-notes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/na_notes.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-na-notes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Records having notes value of N/A
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="overview" class="level3">
+<h3 class="anchored" data-anchor-id="overview">Overview</h3>
 <p>The dataset records for each unique customer, over one quarter, their visit to the website and their spending, along with the marketing cost spent them.</p>
-<section id="dataset-description" class="level3">
-<h3 class="anchored" data-anchor-id="dataset-description">Dataset description</h3>
+</section>
+<section id="detailed-description" class="level3">
+<h3 class="anchored" data-anchor-id="detailed-description">Detailed description</h3>
 </section>
 </section>
 <section id="analysis-result" class="level2">

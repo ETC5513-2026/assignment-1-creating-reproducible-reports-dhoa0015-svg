@@ -18,18 +18,18 @@ format:
         - bottom=25mm
         number-sections: true
 execute:
-    echo: true
+    echo: false
     warning: false
     message: false
 ---
 
 ```{r}
-#| include: false
 
 library(tidyverse)
 library(ggplot2)
 library(knitr)
-
+library(here)
+library(dplyr)
 ```
 
 ## 1. Introduction
@@ -43,13 +43,68 @@ The scope of these observations includes market segmentation across individual c
 This report analyzes the collected dataset to evaluate the key drivers of financial performance and customer value. 
 
 - First, the investigation will focus on answering if there were **a correlation exists between <span style="color:red">Marketing expense</span> and <span style="color:red">Gross revenue</span>**, in order to assess the financial efficiency of our promotional campaigns. 
-- Afterwards, **<span style="color:red">Customer segments</span>** were examined distinctively to **identify differences in <span style="color:red">Revenue</span> across these segmentation**, identifying the campaign's most profitable target audiences.
+- Afterwards, **<span style="color:red">Customer segments</span>** will be examined distinctively to **identify differences in <span style="color:red">Revenue</span> across these segments**, identifying the campaign's most profitable target audiences.
 
 ## 3. Dataset overview 
-* Data cleaning procedures:
+### Data cleaning procedures
+The dataset is clearly not clean enough to build an analysis pipeline on. Here are the cleaning procedures specifically applied to this dataset:
 
+- **Step 1: Set up a relative path to the dataset**: 
+In order for the report to function well across other devices, the path for the dataset have to be set to relative pathway.
+```{r}
+#| include: false
+
+data <- read_csv(file = here::here("data", "36558966_Duc Hoang.csv"))
+```
+
+- **Step 2: Format date field**: 
+For datasets involving `date/time` fields, the ultimate cleaning process is to set the value of these colunms into appropriate format. We are looking for `date` or `date/time` format depending on each dataset. In this case, the dataset originally contained inconsistent date formats within the `signup_date` field. To ensure accurate reporting and time-series analysis, all values have been standardized to a uniform *"YYYY-MM-DD format"*.
+```{r}
+#| include: false
+
+data_date_clean <- data |> 
+    mutate(
+        clean_date = parse_date_time(signup_date, orders = c("ymd", "dmy", "mdy")),
+        signup_date = as.Date(clean_date)
+    )
+print(data_date_clean, n = 150)
+```
+
+- **Step 3: Clean NA records**
+```{r}
+#| include: false
+
+na_purchase_data <- filter(data_date_clean, is.na(purchase_amount))
+print(na_purchase_data)
+
+# For records that have the notes == returned, we will add the purchase amt = 0. For the rest, we grop them observations
+```
+
+Take a look into the dataset, there are **`r nrow(na_purchase_data)` records** missing a value in the `purchase_amount` field. Within this subset, two records include the `notes = returned` (@fig-na_purchase). Further investigation indicates that the `purchase_amount` column tracks gross sales rather than net sales; this is evidenced by numerous other `returned` records that still retain their original, positive purchase values (@fig-return_data). Consequently, we cannot accurately impute a zero value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.
+
+```{r}
+#| label: fig-na_purchase
+#| fig-cap: "Records missing purchase amount value"
+knitr::include_graphics(here::here("images", "NA_purchase_data.png"))
+```
+```{r}
+#| label: fig-return_data
+#| fig-cap: "Customers have had their purchases returned"
+knitr::include_graphics(here::here("images", "return_data.png"))
+```
+
+
+Also, to maintain consistency across the dataset, manual text entries of `N/A` within the notes column were standardized to the system's official missing value format `NA` (@fig-na-notes).
+
+```{r}
+#| label: fig-na-notes
+#| fig-cap: "Records having notes value of N/A"
+knitr::include_graphics(here::here("images", "na_notes.png"))
+```
+
+### Overview
 The dataset records for each unique customer, over one quarter, their visit to the website and their spending, along with the marketing cost spent them.
 
-### Dataset description
+### Detailed description
 
 ## 4. Analysis result
