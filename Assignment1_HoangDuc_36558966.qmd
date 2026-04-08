@@ -85,26 +85,72 @@ Take a look into the dataset, there are **`r nrow(na_purchase_data)` records** m
 ```{r}
 #| label: fig-na_purchase
 #| fig-cap: "Records missing purchase amount value"
+#| fig-cap-location: bottom
 knitr::include_graphics(here::here("images", "NA_purchase_data.png"))
 ```
 ```{r}
 #| label: fig-return_data
 #| fig-cap: "Customers have had their purchases returned"
+#| fig-cap-location: bottom 
 knitr::include_graphics(here::here("images", "return_data.png"))
 ```
-
 
 Also, to maintain consistency across the dataset, manual text entries of `N/A` within the notes column were standardized to the system's official missing value format `NA` (@fig-na-notes).
 
 ```{r}
 #| label: fig-na-notes
 #| fig-cap: "Records having notes value of N/A"
+#| fig-cap-location: bottom
 knitr::include_graphics(here::here("images", "na_notes.png"))
 ```
 
+```{r}
+#| include: false
+
+data_date_clean$notes[data_date_clean$notes == "N/A"] <- NA
+clean_data <- data_date_clean
+```
+
 ### Overview
-The dataset records for each unique customer, over one quarter, their visit to the website and their spending, along with the marketing cost spent them.
+This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents one unique customer, detailing metrics relating to their behaviour on the retail website (visits, purchase volume) alongside the specific marketing initiatives they received (ads, coupons, email management fee, and after-sevice). To quantify revenue generation, the data measures gross sales via the `purchase_amount` field, while supplementary `notes` capture specific transactional behaviors such as product returns. Overall, these records provide the necessary foundation for assessing marketing return on investment (ROI) across various customer segments.
 
 ### Detailed description
+The dataset 
+
+```{r}
+#| echo: false
+#| label: tbl-summarise-table
+#| tbl-cap: "Total retail metrics by customer's segment"
+#| tbl-colwidths: [60,40]
+sum_by_segments <- clean_data |> 
+    group_by(segment) |> 
+    summarise(
+        marketing_expense = sum(marketing_spend),
+        total_visits = sum(visits),
+        gross_revenue = sum(purchase_amount, na.rm = TRUE)
+    )
+knitr::kable(sum_by_segments, digit = 2)
+```
+
+```{r}
+#| echo: false
+#| label: fig-summarise-plot
+#| fig-cap: "Pie chart for customer in each segment"
+#| fig-cap-location: bottom
+
+mean_by_segments <- clean_data |> 
+    group_by(segment) |> 
+    summarise(customer_count = n())
+
+ggplot(mean_by_segments, aes(x = "", y = customer_count, fill = segment)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y", start = 0) +
+  theme_void() + 
+  geom_text(aes(label = scales::percent(customer_count / sum(customer_count), accuracy = 1)), 
+            position = position_stack(vjust = 0.5), 
+            color = "white",
+            size = 5)
+
+```
 
 ## 4. Analysis result

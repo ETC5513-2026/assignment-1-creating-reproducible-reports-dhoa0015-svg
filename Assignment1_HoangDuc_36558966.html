@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Duc Hoang">
-<meta name="dcterms.date" content="2026-04-08">
+<meta name="dcterms.date" content="2026-04-09">
 
 <title>Assignment 1 - Marketing campaign report</title>
 <style>
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 8, 2026</p>
+      <p class="date">April 9, 2026</p>
     </div>
   </div>
   
@@ -117,13 +117,13 @@ ul.task-list li input[type="checkbox"] {
 <p>The dataset is clearly not clean enough to build an analysis pipeline on. Here are the cleaning procedures specifically applied to this dataset:</p>
 <ul>
 <li><p><strong>Step 1: Set up a relative path to the dataset</strong>: In order for the report to function well across other devices, the path for the dataset have to be set to relative pathway.</p></li>
-<li><p><strong>Step 2: Format date field</strong>: For datasets involving <code>date/time</code> fields, the ultimate cleaning process is to set the value of these colunms into appropriate format. We are looking for <code>date</code> or <code>date/time</code> format depending on each dataset. The dataset originally contained inconsistent date formats within the <code>signup_date</code> field. To ensure accurate reporting and time-series analysis, all values have been standardized to a uniform <em>“YYYY-MM-DD format”</em>.</p></li>
+<li><p><strong>Step 2: Format date field</strong>: For datasets involving <code>date/time</code> fields, the ultimate cleaning process is to set the value of these colunms into appropriate format. We are looking for <code>date</code> or <code>date/time</code> format depending on each dataset. In this case, the dataset originally contained inconsistent date formats within the <code>signup_date</code> field. To ensure accurate reporting and time-series analysis, all values have been standardized to a uniform <em>“YYYY-MM-DD format”</em>.</p></li>
 <li><p><strong>Step 3: Clean NA records</strong></p></li>
 </ul>
 <p>Take a look into the dataset, there are <strong>18 records</strong> missing a value in the <code>purchase_amount</code> field. Within this subset, two records include the <code>notes = returned</code> (<a href="#fig-na_purchase" class="quarto-xref">Figure&nbsp;1</a>). Further investigation indicates that the <code>purchase_amount</code> column tracks gross sales rather than net sales; this is evidenced by numerous other <code>returned</code> records that still retain their original, positive purchase values (<a href="#fig-return_data" class="quarto-xref">Figure&nbsp;2</a>). Consequently, we cannot accurately impute a zero value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.</p>
-<div class="cell">
+<div class="cell fig-cap-location-bottom">
 <div class="cell-output-display">
-<div id="fig-na_purchase" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-na_purchase" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-na_purchase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/NA_purchase_data.png" class="img-fluid figure-img">
@@ -135,9 +135,9 @@ Figure&nbsp;1: Records missing purchase amount value
 </div>
 </div>
 </div>
-<div class="cell">
+<div class="cell fig-cap-location-bottom">
 <div class="cell-output-display">
-<div id="fig-return_data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-return_data" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-return_data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/return_data.png" class="img-fluid figure-img">
@@ -150,9 +150,9 @@ Figure&nbsp;2: Customers have had their purchases returned
 </div>
 </div>
 <p>Also, to maintain consistency across the dataset, manual text entries of <code>N/A</code> within the notes column were standardized to the system’s official missing value format <code>NA</code> (<a href="#fig-na-notes" class="quarto-xref">Figure&nbsp;3</a>).</p>
-<div class="cell">
+<div class="cell fig-cap-location-bottom">
 <div class="cell-output-display">
-<div id="fig-na-notes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-na-notes" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-na-notes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/na_notes.png" class="img-fluid figure-img">
@@ -167,10 +167,74 @@ Figure&nbsp;3: Records having notes value of N/A
 </section>
 <section id="overview" class="level3">
 <h3 class="anchored" data-anchor-id="overview">Overview</h3>
-<p>The dataset records for each unique customer, over one quarter, their visit to the website and their spending, along with the marketing cost spent them.</p>
+<p>This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents one unique customer, detailing metrics relating to their behaviour on the retail website (visits, purchase volume) alongside the specific marketing initiatives they received (ads, coupons, email management fee, and after-sevice). To quantify revenue generation, the data measures gross sales via the <code>purchase_amount</code> field, while supplementary <code>notes</code> capture specific transactional behaviors such as product returns. Overall, these records provide the necessary foundation for assessing marketing return on investment (ROI) across various customer segments.</p>
 </section>
 <section id="detailed-description" class="level3">
 <h3 class="anchored" data-anchor-id="detailed-description">Detailed description</h3>
+<p>The dataset</p>
+<div class="cell" data-tbl-colwidths="[60,40]">
+<div id="tbl-summarise-table" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[60,40]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-summarise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Total retail metrics by customer’s segment
+</figcaption>
+<div aria-describedby="tbl-summarise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">segment</th>
+<th style="text-align: right;">marketing_expense</th>
+<th style="text-align: right;">total_visits</th>
+<th style="text-align: right;">gross_revenue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Consumer</td>
+<td style="text-align: right;">12891.48</td>
+<td style="text-align: right;">467</td>
+<td style="text-align: right;">9930.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Enterprise</td>
+<td style="text-align: right;">2229.61</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">1423.44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SMB</td>
+<td style="text-align: right;">6219.11</td>
+<td style="text-align: right;">278</td>
+<td style="text-align: right;">4653.21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell fig-cap-location-bottom">
+<div class="cell-output-display">
+<div id="fig-summarise-plot" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-summarise-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Assignment1_HoangDuc_36558966_files/figure-html/fig-summarise-plot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-summarise-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Pie chart for customer in each segment
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="analysis-result" class="level2">
