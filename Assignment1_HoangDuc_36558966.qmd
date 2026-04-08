@@ -1,11 +1,26 @@
 ---
 title: "Assignment 1 - Marketing campaign report"
-format: 
-    html:
-        theme: litera
-    pdf: default
 editor: visual
 author: Duc Hoang
+date: today
+format: 
+    html:
+        toc: true
+        toc-title: "Table of Contents"
+        theme: litera
+    pdf:
+        documentclass: article
+        fontsize: 11pt
+        geometry:                 
+        - top=25mm
+        - left=25mm
+        - right=25mm
+        - bottom=25mm
+        number-sections: true
+execute:
+    echo: true
+    warning: false
+    message: false
 ---
 
 ```{r}
