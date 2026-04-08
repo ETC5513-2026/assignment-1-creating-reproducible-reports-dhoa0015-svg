@@ -33,11 +33,23 @@ library(knitr)
 ```
 
 ## 1. Introduction
-For the last quarter, Marketing department had lauched a campaign of personalised marketing, calculate the marketing spent on each customers. This report will contrast customer acquisition metrics, such as store visits and transaction volumes, directly against their associated marketing expenditures to evaluate whether more marketing cost per customer bring about more benefits. It examines a comprehensive cross-section of our user base, evaluating cohorts ranging from new acquisitions to tenured accounts. The scope of observation includes market segmentation across individual consumers to enterprise clients.
+For the last quarter, Marketing department had lauched a campaign of personalised marketing, calculate the  marketing spent on each customers.
 
-## 2. Research questions
-- Is there a correlation relationship between marketing expense and gross revenue ?
-- Is there a difference in net revenue across different customer segments ?
-- *How does customers' reaction to after-sales service affect net sales numbers ?*
+This report will contrast customer acquisition metrics, such as store visits and transaction volumes directly against their associated marketing expenditures to evaluate whether more marketing cost per customer bring about more benefits. It examines a comprehensive cross-section of our user base, evaluating cohorts ranging from new acquisitions to tenured accounts.
+
+The scope of these observations includes market segmentation across individual consumers to enterprise clients.
+
+## 2. Research objectives
+This report analyzes the collected dataset to evaluate the key drivers of financial performance and customer value. 
+
+- First, the investigation will focus on answering if there were **a correlation exists between <span style="color:red">Marketing expense</span> and <span style="color:red">Gross revenue</span>**, in order to assess the financial efficiency of our promotional campaigns. 
+- Afterwards, **<span style="color:red">Customer segments</span>** were examined distinctively to **identify differences in <span style="color:red">Revenue</span> across these segmentation**, identifying the campaign's most profitable target audiences.
 
 ## 3. Dataset overview 
+* Data cleaning procedures:
+
+The dataset records for each unique customer, over one quarter, their visit to the website and their spending, along with the marketing cost spent them.
+
+### Dataset description
+
+## 4. Analysis result
