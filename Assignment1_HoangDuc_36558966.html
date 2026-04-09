@@ -102,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<p>For the last quarter, Marketing department had lauched a campaign of personalised marketing, calculate the marketing spent on each customers.</p>
+<p>For the last quarter, Marketing department had lauched a campaign of personalised marketing, calculating the marketing expense on each customers.</p>
 <p>This report will contrast customer acquisition metrics, such as store visits and transaction volumes directly against their associated marketing expenditures to evaluate whether more marketing cost per customer bring about more benefits. It examines a comprehensive cross-section of our user base, evaluating cohorts ranging from new acquisitions to tenured accounts.</p>
 <p>The scope of these observations includes market segmentation across individual consumers to enterprise clients.</p>
 </section>
@@ -121,10 +121,10 @@ ul.task-list li input[type="checkbox"] {
 <p>The dataset is clearly not clean enough to build an analysis pipeline on. Here are the cleaning procedures specifically applied to this dataset:</p>
 <ul>
 <li><p><strong>Step 1: Set up a relative path to the dataset</strong>: In order for the report to function well across other devices, the path for the dataset have to be set to relative pathway.</p></li>
-<li><p><strong>Step 2: Format date field</strong>: For datasets involving <code>date/time</code> fields, the ultimate cleaning process is to set the value of these colunms into appropriate format. We are looking for <code>date</code> or <code>date/time</code> format depending on each dataset. In this case, the dataset originally contained inconsistent date formats within the <code>signup_date</code> field. To ensure accurate reporting and time-series analysis, all values have been standardized to a uniform <em>“YYYY-MM-DD format”</em>.</p></li>
+<li><p><strong>Step 2: Format date field</strong>: For datasets involving <code>date/time</code> fields, the ultimate cleaning process is to set the value of these colunms into appropriate format. We are looking for <code>date</code> or <code>date/time</code> format depending on each dataset. In this case, the dataset originally contain inconsistent date formats within the <code>signup_date</code> field. To ensure accurate reporting and time-series analysis, all values have been standardized to a uniform <em>“YYYY-MM-DD”</em> format.</p></li>
 <li><p><strong>Step 3: Clean NA records</strong></p></li>
 </ul>
-<p>Take a look into the dataset, there are <strong>18 records</strong> missing a value in the <code>purchase_amount</code> field. Within this subset, two records include the <code>notes = returned</code> (<strong>?@fig-fig-data-cleaning</strong>). Further investigation indicates that the <code>purchase_amount</code> column tracks gross sales rather than net sales; this is evidenced by numerous other <code>returned</code> records that still retain their original, positive purchase values (<strong>?@fig-data-cleaning</strong>). Consequently, we cannot accurately impute a zero value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.</p>
+<p>Take a look into the dataset, there are <strong>18 records</strong> missing a value in the <code>purchase_amount</code> field. Within this subset, two records include the <code>notes = returned</code>. Further investigation indicates that the <code>purchase_amount</code> column tracks gross sales rather than net sales; this is evidenced by numerous other <code>returned</code> records that still retain their original, positive purchase values. Consequently, we cannot accurately impute a “0” value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.</p>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
@@ -153,7 +153,7 @@ Figure&nbsp;2: Returned purchases
 </div>
 </div>
 </div>
-<p>Also, to maintain consistency across the dataset, manual text entries of <code>N/A</code> within the notes column were standardized to the system’s official missing value format <code>NA</code> (<a href="#fig-na-notes" class="quarto-xref">Figure&nbsp;3</a>).</p>
+<p>Also, to maintain consistency across the dataset, manual text entries of <code>N/A</code> within the notes column were standardized to the system’s official missing value format <code>NA</code> <strong>(<a href="#fig-na-notes" class="quarto-xref">Figure&nbsp;3</a>)</strong>.</p>
 <div class="cell fig-cap-location-bottom">
 <div class="cell-output-display">
 <div id="fig-na-notes" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
@@ -171,13 +171,13 @@ Figure&nbsp;3: Records having notes value of N/A
 </section>
 <section id="overview" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="overview"><span class="header-section-number">3.2</span> Overview</h3>
-<p>This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents one unique customer, detailing metrics relating to their behaviour on the retail website (visits, purchase volume) alongside the specific marketing initiatives they received (ads, coupons, email management fee, and after-sevice).</p>
+<p>This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents <strong>one unique customer, detailing metrics relating to their behaviour</strong> on the retail website (visits, purchase volume) <strong>alongside the specific marketing initiatives they received</strong> (ads, coupons, email management fee, and after-sevice).</p>
 <p>To quantify revenue generation, the data measures gross sales via the <code>purchase_amount</code> field, while supplementary <code>notes</code> capture specific transactional behaviors such as product returns. Overall, these records provide the necessary foundation for assessing marketing return on investment (ROI) across various customer segments.</p>
 </section>
 <section id="detailed-description" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="detailed-description"><span class="header-section-number">3.3</span> Detailed description</h3>
 <p>Overall, the dataset consists of <strong>8</strong> variables and <strong>150</strong> observations. The only variable have “<strong>Date</strong>” type is <code>signup_date</code>, three columns have “<strong>numeric</strong>” type are <code>marketing-spend</code>, <code>visits</code> and <code>purchase_amount</code>; the remaining are recorded under “<strong>character</strong>”.</p>
-<p>Generally, the marketing campaign was successfully engaged on a wide range of customers, from individual consumers to large enterprises. Our website traffic is heavily driven by the B2C market, with individual consumers accounting for nearly 60% of all visitors. SMBs represent a healthy secondary segment at roughly 30% of our customers. However, Enterprise visitors make up just 10% of our traffic, indicating that while our overall commercial reach is solid, our footprint in the high-value enterprise space remains modest. Detailed information address through <a href="#fig-summarise-plot" class="quarto-xref">Figure&nbsp;4</a></p>
+<p>Generally, the marketing campaign was successfully engaged on a <strong>wide range of customers</strong>, from individual consumers to large enterprises. Our website traffic is heavily driven by the B2C market, with individual consumers accounting for nearly <mark>60% of all visitors</mark>. SMBs represent a healthy secondary segment at roughly <mark>30%</mark> of our customers. However, Enterprise visitors make up just <mark>10%</mark> of our traffic, indicating that while our overall commercial reach is solid, our footprint in the high-value enterprise space remains modest. Detailed information address through <strong><a href="#fig-summarise-plot" class="quarto-xref">Figure&nbsp;4</a></strong></p>
 <div class="cell fig-cap-location-bottom">
 <div class="cell-output-display">
 <div id="fig-summarise-plot" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
@@ -192,11 +192,11 @@ Figure&nbsp;4: Pie chart for customer in each segment
 </div>
 </div>
 </div>
-<p>While our financial metrics broadly align with our customer base proportions, a deeper segmentation analysis reveals a distinct difference in how each group interacts with our campaign. Detailed information address through <a href="#tbl-summarise-table" class="quarto-xref">Table&nbsp;1</a></p>
+<p>While our financial metrics broadly align with our customer base proportions, a deeper segmentation analysis reveals a distinct difference in how each group interacts with our campaign. Detailed information address through <strong><a href="#tbl-summarise-table" class="quarto-xref">Table&nbsp;1</a></strong></p>
 <ul>
-<li><p><strong>Consumer</strong>: consumers account for the best amount of our base clients, therefor, most of our marketing expense were spent here (60.4%). Yet, this group yielded 62% of our gross sales. This means this customer segment is highly efficient and profitable</p></li>
-<li><p><strong>SMB</strong>: despite consuming only 29.1% of the marketing budget, SMBs generated a massive 34.1% of total site visits. However, this segment only contributed 29.1% of gross revenue. This means the campaign successfully get these customers browsing the website, yet it failed to make them purchasing.</p></li>
-<li><p><strong>Enterprise</strong>: Enterprise clients required 10.4% of our marketing expense to generate 8.7% of site visits and 8.9% of gross revenue. This suggests that digital marketing campaigns may not be the most effective channel for acquiring complex Enterprise clients, who typically require direct sales outreach.</p></li>
+<li><p><strong>Consumer</strong>: consumers account for the best amount of our base clients, therefor, most of our marketing expense were spent here (60.4%). Yet, this group <mark>yielded 62% of our gross sales</mark>.</p></li>
+<li><p><strong>SMB</strong>: despite consuming only 29.1% of the marketing budget, SMBs generated a massive 34.1% of total site visits. However, this segment <strong>only contributed 29.1%</strong> of gross revenue. This means the campaign successfully get these customers browsing the website, yet it failed to make them purchasing.</p></li>
+<li><p><strong>Enterprise</strong>: Enterprise clients required 10.4% of our marketing expense to generate 8.7% of site visits and 8.9% of gross revenue. This suggests that digital marketing campaigns <strong>may not be the most effective channel</strong> for acquiring complex enterprise clients, who typically require direct sales outreach.</p></li>
 </ul>
 <div class="cell" data-tbl-cap-location="bottom">
 <div id="tbl-summarise-table" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
@@ -205,23 +205,23 @@ Figure&nbsp;4: Pie chart for customer in each segment
 <div class="cell-output-display">
 <table class="cell caption-top table table-sm table-striped small">
 <colgroup>
+<col style="width: 16%">
+<col style="width: 21%">
+<col style="width: 9%">
+<col style="width: 19%">
 <col style="width: 9%">
 <col style="width: 15%">
-<col style="width: 19%">
-<col style="width: 11%">
-<col style="width: 15%">
-<col style="width: 12%">
-<col style="width: 16%">
+<col style="width: 9%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">segment</th>
-<th style="text-align: right;">marketing_expense</th>
-<th style="text-align: right;">marketing_expense_prop</th>
-<th style="text-align: right;">total_visits</th>
-<th style="text-align: right;">total_visits_prop</th>
-<th style="text-align: right;">gross_revenue</th>
-<th style="text-align: right;">gross_revenue_prop</th>
+<th style="text-align: left;">Segment</th>
+<th style="text-align: right;">Marketing Exp</th>
+<th style="text-align: right;">Prop</th>
+<th style="text-align: right;">Total Visits</th>
+<th style="text-align: right;">Prop</th>
+<th style="text-align: right;">Gross Rev</th>
+<th style="text-align: right;">Prop</th>
 </tr>
 </thead>
 <tbody>
@@ -268,11 +268,11 @@ Table&nbsp;1: Total retail metrics by customer’s segment
 <h2 data-number="4" class="anchored" data-anchor-id="analysis-result"><span class="header-section-number">4</span> Analysis result</h2>
 <section id="correlation-insight" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="correlation-insight"><span class="header-section-number">4.1</span> Correlation insight</h3>
-<p>There is a clear <strong>positive correlation</strong> between <strong>Marketing Spend</strong> and <strong>Purchase Amount</strong>. According to the <a href="#fig-scatterplot-correlation" class="quarto-xref">Figure&nbsp;5</a>, the linear aggression line show an upward trend, which can explain the more spending on marketing bring about the higher purchase amount. The investment on marketing campaign have proved to gain success on upbringing sales number, <strong>helping to drive larger sales number</strong> .</p>
-<p>However, some points are scattered in a wide range around the linear line. This suggests that marketing spend <strong>is not the only factor</strong> contributes to the uptrend of sales. There are many recorded customers bring about high ROI, eventhough the marketing cost was low. Sales department should shift the focus to these cases to grasp the understand of how to make the most out of marketing expense.</p>
+<p>There is a clear <strong>positive correlation</strong> between <strong>Marketing Spend</strong> and <strong>Purchase Amount</strong>. According to the <strong><a href="#fig-scatterplot-correlation" class="quarto-xref">Figure&nbsp;5</a></strong>, the linear aggression line show an upward trend, which can explain the more spending on marketing bring about the higher purchase amount. The investment on marketing campaign have proved to gain <strong>success on upbringing sales number</strong>,helping to drive larger sales number.</p>
+<p>However, some points are scattered in a wide range around the linear line. This suggests that marketing spend <strong>is not the only factor</strong> contributes to the uptrend of sales. There are many recorded customers bring about high ROI, eventhough the marketing cost was reported low. Sales department should shift the focus to these cases to grasp the understand of how to make the most out of marketing expense.</p>
 <div class="cell fig-cap-location-bottom" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-scatterplot-correlation" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-cap-location="bottom">
+<div id="fig-scatterplot-correlation" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-scatterplot-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Assignment1_HoangDuc_36558966_files/figure-html/fig-scatterplot-correlation-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
@@ -287,8 +287,9 @@ Figure&nbsp;5: Marketing expense to Gross sales
 </section>
 <section id="profitable-customer-insight" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="profitable-customer-insight"><span class="header-section-number">4.2</span> Profitable customer insight</h3>
-<p>The graph clearly indicate that, during the last quarter, <strong>the cost invested on marketing is currently outpacing the revenue across all three segments</strong>. The proportion for marketing expense and purchase amount are align with customers number. However, the consumer segment raise the biggest loss (around $3000). This might happen because we are overspending on clicks or impressions that aren’t converting into high-value carts.</p>
-<p>While the campaign show negative value to our profit, this campaign <strong>might bring about positivity in the long run</strong>. we have successfully acquired a large volume of users, particularly in the <strong>Consumer</strong> segment. The main focus of the team now is to collect data indicating the comeback rate of these customers over the next quarters, progresively answer the question: <strong><em>Is this initial loss actually just a down payment on long-term market share?</em></strong>. This act is our way to determine long-lasting value of these newly acquired individual consumers and company clients will eventually <strong>offset the initial high acquisition cost</strong>.</p>
+<p>The graph clearly indicates that, during the last quarter, <strong>the cost invested on marketing is currently outpacing the revenue across all three segments</strong>. The proportion for marketing expense and purchase amount are align with customers number. However, the Consumer segment raised the biggest loss (around $3000), followed by the loss from SMBs and Enterprises in that order <strong>(<a href="#fig-bar-segemnt-analysis" class="quarto-xref">Figure&nbsp;6</a>)</strong>. This might have happened,because we have overspent on clicks or impressions that aren’t converting into high-value carts.</p>
+<p>While the campaign shows negative value to our profit, it <strong>might bring about positivity in the long run</strong>. We have successfully <strong>acquired a large volume of users</strong>, particularly in the Consumer segment.</p>
+<p>The main focus of the team now is to collect data indicating the comeback rate of these customers over the next quarters, progresively answer the question: <mark><em>Is this initial loss actually just a down payment on long-term market share?</em></mark>. This act is our way to determine long-lasting value of these newly acquired individual consumers and company clients will eventually <strong>offset the initial high acquisition cost</strong>.</p>
 <div class="cell fig-cap-location-bottom">
 <div class="cell-output-display">
 <div id="fig-bar-segemnt-analysis" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">

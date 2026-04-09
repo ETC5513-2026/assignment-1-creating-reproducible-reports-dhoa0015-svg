@@ -14,7 +14,7 @@ format:
       fontsize: 11pt
       geometry:                 
         - top=15mm
-        - left=15mm
+        - left=20mm
         - right=15mm
         - bottom=15mm
       number-sections: true
@@ -34,7 +34,7 @@ library(dplyr)
 ```
 
 ## Introduction
-For the last quarter, Marketing department had lauched a campaign of personalised marketing, calculate the  marketing spent on each customers.
+For the last quarter, Marketing department had lauched a campaign of personalised marketing, calculating the  marketing expense on each customers.
 
 This report will contrast customer acquisition metrics, such as store visits and transaction volumes directly against their associated marketing expenditures to evaluate whether more marketing cost per customer bring about more benefits. It examines a comprehensive cross-section of our user base, evaluating cohorts ranging from new acquisitions to tenured accounts.
 
@@ -59,7 +59,7 @@ data <- read_csv(file = here::here("data", "36558966_Duc Hoang.csv"))
 ```
 
 - **Step 2: Format date field**: 
-For datasets involving `date/time` fields, the ultimate cleaning process is to set the value of these colunms into appropriate format. We are looking for `date` or `date/time` format depending on each dataset. In this case, the dataset originally contained inconsistent date formats within the `signup_date` field. To ensure accurate reporting and time-series analysis, all values have been standardized to a uniform *"YYYY-MM-DD format"*.
+For datasets involving `date/time` fields, the ultimate cleaning process is to set the value of these colunms into appropriate format. We are looking for `date` or `date/time` format depending on each dataset. In this case, the dataset originally contain inconsistent date formats within the `signup_date` field. To ensure accurate reporting and time-series analysis, all values have been standardized to a uniform *"YYYY-MM-DD"* format.
 ```{r}
 #| include: false
 
@@ -81,7 +81,7 @@ print(na_purchase_data)
 # For records that have the notes == returned, we will add the purchase amt = 0. For the rest, we grop them observations
 ```
 
-Take a look into the dataset, there are **`r nrow(na_purchase_data)` records** missing a value in the `purchase_amount` field. Within this subset, two records include the `notes = returned` (@fig-fig-data-cleaning). Further investigation indicates that the `purchase_amount` column tracks gross sales rather than net sales; this is evidenced by numerous other `returned` records that still retain their original, positive purchase values (@fig-data-cleaning). Consequently, we cannot accurately impute a zero value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.
+Take a look into the dataset, there are **`r nrow(na_purchase_data)` records** missing a value in the `purchase_amount` field. Within this subset, two records include the `notes = returned`. Further investigation indicates that the `purchase_amount` column tracks gross sales rather than net sales; this is evidenced by numerous other `returned` records that still retain their original, positive purchase values. Consequently, we cannot accurately impute a "0" value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.
 
 ```{r}
 #| layout-ncol: 2
@@ -94,7 +94,7 @@ knitr::include_graphics(here::here("images", "NA_purchase_data.png"))
 knitr::include_graphics(here::here("images", "return_data.png"))
 ```
 
-Also, to maintain consistency across the dataset, manual text entries of `N/A` within the notes column were standardized to the system's official missing value format `NA` (@fig-na-notes).
+Also, to maintain consistency across the dataset, manual text entries of `N/A` within the notes column were standardized to the system's official missing value format `NA` **(@fig-na-notes)**.
 
 ```{r}
 #| label: fig-na-notes
@@ -111,19 +111,19 @@ clean_data <- data_date_clean
 ```
 
 ### Overview
-This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents one unique customer, detailing metrics relating to their behaviour on the retail website (visits, purchase volume) alongside the specific marketing initiatives they received (ads, coupons, email management fee, and after-sevice). 
+This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents **one unique customer, detailing metrics relating to their behaviour** on the retail website (visits, purchase volume) **alongside the specific marketing initiatives they received** (ads, coupons, email management fee, and after-sevice). 
 
 To quantify revenue generation, the data measures gross sales via the `purchase_amount` field, while supplementary `notes` capture specific transactional behaviors such as product returns. Overall, these records provide the necessary foundation for assessing marketing return on investment (ROI) across various customer segments.
 
 ### Detailed description
 Overall, the dataset consists of **`r ncol(clean_data)`** variables and **`r nrow(clean_data)`** observations. The only variable have "**`r class(clean_data$signup_date)`**" type is `signup_date`, three columns have "**`r class(clean_data$visits)`**" type are `marketing-spend`, `visits` and `purchase_amount`; the remaining are recorded under "**`r class(clean_data$notes)`**".
 
-Generally, the marketing campaign was successfully engaged on a wide range of customers, from individual consumers to large enterprises. Our website traffic is heavily driven by the B2C market, with individual consumers accounting for nearly 60% of all visitors. SMBs represent a healthy secondary segment at roughly 30% of our customers. However, Enterprise visitors make up just 10% of our traffic, indicating that while our overall commercial reach is solid, our footprint in the high-value enterprise space remains modest. Detailed information address through @fig-summarise-plot
+Generally, the marketing campaign was successfully engaged on a **wide range of customers**, from individual consumers to large enterprises. Our website traffic is heavily driven by the B2C market, with individual consumers accounting for nearly <mark>60% of all visitors</mark>. SMBs represent a healthy secondary segment at roughly <mark>30%</mark> of our customers. However, Enterprise visitors make up just <mark>10%</mark> of our traffic, indicating that while our overall commercial reach is solid, our footprint in the high-value enterprise space remains modest. Detailed information address through **@fig-summarise-plot**
 
 ```{r}
 #| echo: false
 #| label: fig-summarise-plot
-#| fig-cap: "Pie chart for customer in each segment"
+#| fig-cap: "Number of customers in each segment"
 #| fig-cap-location: bottom
 
 mean_by_segments <- clean_data |> 
@@ -137,17 +137,18 @@ ggplot(mean_by_segments, aes(x = "", y = customer_count, fill = segment)) +
   geom_text(aes(label = scales::percent(customer_count / sum(customer_count), accuracy = 1)), 
             position = position_stack(vjust = 0.5), 
             color = "white",
-            size = 5)
+            size = 5)+
+  labs(title = "Customers by segment")
 
 ```
 
-While our financial metrics broadly align with our customer base proportions, a deeper segmentation analysis reveals a distinct difference in how each group interacts with our campaign. Detailed information address through @tbl-summarise-table
+While our financial metrics broadly align with our customer base proportions, a deeper segmentation analysis reveals a distinct difference in how each group interacts with our campaign. Detailed information address through **@tbl-summarise-table**
 
-- **Consumer**: consumers account for the best amount of our base clients, therefor, most of our marketing expense were spent here (60.4%). Yet, this group yielded 62% of our gross sales. This means this customer segment is highly efficient and profitable
+- **Consumer**: consumers account for the best amount of our base clients, therefor, most of our marketing expense were spent here (60.4%). Yet, this group <mark>yielded 62% of our gross sales</mark>.
 
-- **SMB**: despite consuming only 29.1% of the marketing budget, SMBs generated a massive 34.1% of total site visits. However, this segment only contributed 29.1% of gross revenue. This means the campaign successfully get these customers browsing the website, yet it failed to make them purchasing.
+- **SMB**: despite consuming only 29.1% of the marketing budget, SMBs generated a massive 34.1% of total site visits. However, this segment **only contributed 29.1%** of gross revenue. This means the campaign successfully get these customers browsing the website, yet it failed to make them purchasing.
 
-- **Enterprise**: Enterprise clients required 10.4% of our marketing expense to generate 8.7% of site visits and 8.9% of gross revenue. This suggests that digital marketing campaigns may not be the most effective channel for acquiring complex Enterprise clients, who typically require direct sales outreach.
+- **Enterprise**: Enterprise clients required 10.4% of our marketing expense to generate 8.7% of site visits and 8.9% of gross revenue. This suggests that digital marketing campaigns **may not be the most effective channel** for acquiring complex enterprise clients, who typically require direct sales outreach.
 ```{r}
 #| echo: false
 #| label: tbl-summarise-table
@@ -171,14 +172,23 @@ sum_by_segments <- clean_data |>
     gross_revenue, gross_revenue_prop
   )
 
-knitr::kable(sum_by_segments, digits = 2)
+knitr::kable(sum_by_segments, digits = 2, booktabs = TRUE,
+  col.names = c(
+    "Segment", 
+    "Marketing Exp", 
+    "Prop(%)", 
+    "Total Visits", 
+    "Prop(%)", 
+    "Gross Rev", 
+    "Prop(%)"
+  ))
 ```
 
 ## Analysis result
 ### Correlation insight
-There is a clear **positive correlation** between **Marketing Spend** and **Purchase Amount**. According to the @fig-scatterplot-correlation, the linear aggression line show an upward trend, which can explain the more spending on marketing bring about the higher purchase amount. The investment on marketing campaign have proved to gain success on upbringing sales number, **helping to drive larger sales number** .
+There is a clear **positive correlation** between **Marketing Spend** and **Purchase Amount**. According to the **@fig-scatterplot-correlation**, the linear aggression line show an upward trend, which can explain the more spending on marketing bring about the higher purchase amount. The investment on marketing campaign have proved to gain **success on upbringing sales number**,helping to drive larger sales number.
 
-However, some points are scattered in a wide range around the linear line. This suggests that marketing spend **is not the only factor** contributes to the uptrend of sales. There are many recorded customers bring about high ROI, eventhough the marketing cost was low. Sales department should shift the focus to these cases to grasp the understand of how to make the most out of marketing expense.
+However, some points are scattered in a wide range around the linear line. This suggests that marketing spend **is not the only factor** contributes to the uptrend of sales. There are many recorded customers bring about high ROI, eventhough the marketing cost was reported low. Sales department should shift the focus to these cases to grasp the understand of how to make the most out of marketing expense.
 ```{r}
 #| echo: false
 #| label: fig-scatterplot-correlation
@@ -200,10 +210,11 @@ ggplot(clean_data, aes(x = marketing_spend, y = purchase_amount)) +
 ```
 
 ### Profitable customer insight
-The graph clearly indicate that, during the last quarter, **the cost invested on marketing is currently outpacing the revenue across all three segments**. The proportion for marketing expense and purchase amount are align with customers number. However, the consumer segment raise the biggest loss (around $3000). This might happen because we are overspending on clicks or impressions that aren't converting into high-value carts. 
+The graph clearly indicates that, during the last quarter, **the cost invested on marketing is currently outpacing the revenue across all three segments**. The proportion for marketing expense and purchase amount are align with customers number. However, the Consumer segment raised the biggest loss (around $3000), followed by the loss from SMBs and Enterprises in that order **(@fig-bar-segemnt-analysis)**. This might have happened,because we have overspent on clicks or impressions that aren't converting into high-value carts. 
 
-While the campaign show negative value to our profit, this campaign **might bring about positivity in the long run**. we have successfully acquired a large volume of users, particularly in the **Consumer** segment.
-The main focus of the team now is to collect data indicating the comeback rate of these customers over the next quarters, progresively answer the question: ***Is this initial loss actually just a down payment on long-term market share?***. This act is our way to determine long-lasting value of these newly acquired individual consumers and company clients will eventually **offset the initial high acquisition cost**.
+While the campaign shows negative value to our profit, it **might bring about positivity in the long run**. We have successfully **acquired a large volume of users**, particularly in the Consumer segment.
+
+The main focus of the team now is to collect data indicating the comeback rate of these customers over the next quarters, progresively answer the question: <mark>*Is this initial loss actually just a down payment on long-term market share?*</mark>. This act is our way to determine long-lasting value of these newly acquired individual consumers and company clients will eventually **offset the initial high acquisition cost**.
 
 ```{r}
 #| echo: false
