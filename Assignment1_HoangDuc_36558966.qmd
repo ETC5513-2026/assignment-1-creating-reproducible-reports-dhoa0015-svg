@@ -225,13 +225,12 @@ The main focus of the team now is to collect data indicating the comeback rate o
 # Assuming you calculate the total revenue per segment first:
 long_data <- sum_by_segments %>%
     pivot_longer(
-    cols = c(gross_revenue, marketing_expense), # The columns you want to compare
-    names_to = "metric",                # Creates a new column naming the metric
-    values_to = "amount"                # Creates a new column for the actual numbers
+    cols = c(gross_revenue, marketing_expense),
+    names_to = "metric",                
+    values_to = "amount"                
   )
 
 ggplot(long_data, aes(x = segment, y = amount, fill = metric)) +
-  # position = "dodge" places the bars side-by-side instead of stacking them
   geom_bar(stat = "identity", position = "dodge") + 
   labs(
     title = "Revenue & Marketing Spend by Segment",
