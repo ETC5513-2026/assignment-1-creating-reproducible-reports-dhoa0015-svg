@@ -5,18 +5,19 @@ author: Duc Hoang
 date: today
 format: 
     html:
-        toc: true
-        toc-title: "Table of Contents"
-        theme: litera
-    pdf:
-        documentclass: article
-        fontsize: 11pt
-        geometry:                 
-        - top=25mm
-        - left=25mm
-        - right=25mm
-        - bottom=25mm
-        number-sections: true
+      toc: true
+      toc-title: "Table of Contents"
+      theme: litera
+      number-sections: true
+    pdf: 
+      documentclass: article
+      fontsize: 11pt
+      geometry:                 
+        - top=15mm
+        - left=15mm
+        - right=15mm
+        - bottom=15mm
+      number-sections: true
 execute:
     echo: false
     warning: false
@@ -32,20 +33,20 @@ library(here)
 library(dplyr)
 ```
 
-## 1. Introduction
+## Introduction
 For the last quarter, Marketing department had lauched a campaign of personalised marketing, calculate the  marketing spent on each customers.
 
 This report will contrast customer acquisition metrics, such as store visits and transaction volumes directly against their associated marketing expenditures to evaluate whether more marketing cost per customer bring about more benefits. It examines a comprehensive cross-section of our user base, evaluating cohorts ranging from new acquisitions to tenured accounts.
 
 The scope of these observations includes market segmentation across individual consumers to enterprise clients.
 
-## 2. Research objectives
+## Research objectives
 This report analyzes the collected dataset to evaluate the key drivers of financial performance and customer value. 
 
 - First, the investigation will focus on answering if there were **a correlation exists between <span style="color:red">Marketing expense</span> and <span style="color:red">Gross revenue</span>**, in order to assess the financial efficiency of our promotional campaigns. 
-- Afterwards, **<span style="color:red">Customer segments</span>** will be examined distinctively to **identify differences in <span style="color:red">Revenue</span> across these segments**, identifying the campaign's most profitable target audiences.
+- Afterwards, **<span style="color:red">Customer segments</span>** will be examined distinctively to **identify differences in <span style="color:red">Revenue</span> and <span style="color:red">Marketing expense</span> across these segments**, identifying the campaign's interaction on each type of audience.
 
-## 3. Dataset overview 
+## Dataset overview 
 ### Data cleaning procedures
 The dataset is clearly not clean enough to build an analysis pipeline on. Here are the cleaning procedures specifically applied to this dataset:
 
@@ -80,18 +81,16 @@ print(na_purchase_data)
 # For records that have the notes == returned, we will add the purchase amt = 0. For the rest, we grop them observations
 ```
 
-Take a look into the dataset, there are **`r nrow(na_purchase_data)` records** missing a value in the `purchase_amount` field. Within this subset, two records include the `notes = returned` (@fig-na_purchase). Further investigation indicates that the `purchase_amount` column tracks gross sales rather than net sales; this is evidenced by numerous other `returned` records that still retain their original, positive purchase values (@fig-return_data). Consequently, we cannot accurately impute a zero value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.
+Take a look into the dataset, there are **`r nrow(na_purchase_data)` records** missing a value in the `purchase_amount` field. Within this subset, two records include the `notes = returned` (@fig-fig-data-cleaning). Further investigation indicates that the `purchase_amount` column tracks gross sales rather than net sales; this is evidenced by numerous other `returned` records that still retain their original, positive purchase values (@fig-data-cleaning). Consequently, we cannot accurately impute a zero value for these two entries. Because the remaining null records also lack sufficient context for accurate imputation, all missing values in this field will be left as-is to preserve data integrity.
 
 ```{r}
-#| label: fig-na_purchase
-#| fig-cap: "Records missing purchase amount value"
-#| fig-cap-location: bottom
+#| layout-ncol: 2
+#| fig-cap: 
+#|   - "Records missing purchase amount"
+#|   - "Returned purchases"
+#| label: fig-data-cleaning
+
 knitr::include_graphics(here::here("images", "NA_purchase_data.png"))
-```
-```{r}
-#| label: fig-return_data
-#| fig-cap: "Customers have had their purchases returned"
-#| fig-cap-location: bottom 
 knitr::include_graphics(here::here("images", "return_data.png"))
 ```
 
@@ -149,11 +148,11 @@ While our financial metrics broadly align with our customer base proportions, a 
 - **SMB**: despite consuming only 29.1% of the marketing budget, SMBs generated a massive 34.1% of total site visits. However, this segment only contributed 29.1% of gross revenue. This means the campaign successfully get these customers browsing the website, yet it failed to make them purchasing.
 
 - **Enterprise**: Enterprise clients required 10.4% of our marketing expense to generate 8.7% of site visits and 8.9% of gross revenue. This suggests that digital marketing campaigns may not be the most effective channel for acquiring complex Enterprise clients, who typically require direct sales outreach.
-
 ```{r}
 #| echo: false
 #| label: tbl-summarise-table
 #| tbl-cap: "Total retail metrics by customer's segment"
+#| tbl-cap-location: bottom
 
 sum_by_segments <- clean_data |> 
     group_by(segment) |> 
@@ -172,27 +171,46 @@ sum_by_segments <- clean_data |>
     gross_revenue, gross_revenue_prop
   )
 
-knitr::kable(sum_by_segments, digit = 2)
+knitr::kable(sum_by_segments, digits = 2)
 ```
 
-## 4. Analysis result
+## Analysis result
+### Correlation insight
+There is a clear **positive correlation** between **Marketing Spend** and **Purchase Amount**. According to the @fig-scatterplot-correlation, the linear aggression line show an upward trend, which can explain the more spending on marketing bring about the higher purchase amount. The investment on marketing campaign have proved to gain success on upbringing sales number, **helping to drive larger sales number** .
 
-
+However, some points are scattered in a wide range around the linear line. This suggests that marketing spend **is not the only factor** contributes to the uptrend of sales. There are many recorded customers bring about high ROI, eventhough the marketing cost was low. Sales department should shift the focus to these cases to grasp the understand of how to make the most out of marketing expense.
 ```{r}
+#| echo: false
+#| label: fig-scatterplot-correlation
+#| fig-cap: "Marketing expense to Gross sales"
+#| fig-cap-location: bottom
+#| fig-height: 3.5
+#| out-width: "80%"
+#| fig-align: "center"
 
 ggplot(clean_data, aes(x = marketing_spend, y = purchase_amount)) +
   geom_point(alpha = 0.6, size = 2) + 
   geom_smooth(method = "lm", se = TRUE) + 
   labs(
-    title = "Marketing Spend vs. Purchase Amount",
+    title = "Marketing Expense vs. Gross Sales",
     subtitle = "Assessing correlation relationship",
-    x = "Marketing Spend",
-    y = "Purchase Amount"
+    x = "Marketing Expend",
+    y = "Gross Sales"
   )
 ```
 
+### Profitable customer insight
+The graph clearly indicate that, during the last quarter, **the cost invested on marketing is currently outpacing the revenue across all three segments**. The proportion for marketing expense and purchase amount are align with customers number. However, the consumer segment raise the biggest loss (around $3000). This might happen because we are overspending on clicks or impressions that aren't converting into high-value carts. 
+
+While the campaign show negative value to our profit, this campaign **might bring about positivity in the long run**. we have successfully acquired a large volume of users, particularly in the **Consumer** segment.
+The main focus of the team now is to collect data indicating the comeback rate of these customers over the next quarters, progresively answer the question: ***Is this initial loss actually just a down payment on long-term market share?***. This act is our way to determine long-lasting value of these newly acquired individual consumers and company clients will eventually **offset the initial high acquisition cost**.
 
 ```{r}
+#| echo: false
+#| label: fig-bar-segemnt-analysis
+#| fig-cap: "Marketing expense & Gross sales among all Segments"
+#| fig-cap-location: bottom
+
 # Assuming you calculate the total revenue per segment first:
 long_data <- sum_by_segments %>%
     pivot_longer(
@@ -205,10 +223,9 @@ ggplot(long_data, aes(x = segment, y = amount, fill = metric)) +
   # position = "dodge" places the bars side-by-side instead of stacking them
   geom_bar(stat = "identity", position = "dodge") + 
   labs(
-    title = "Revenue vs. Marketing Spend by Segment",
-    x = "Audience Segment",
+    title = "Revenue & Marketing Spend by Segment",
+    x = "Customer Segment",
     y = "Amount ($)",
     fill = "Metric"
   )
 ```
-
