@@ -167,60 +167,13 @@ Figure&nbsp;3: Records having notes value of N/A
 </section>
 <section id="overview" class="level3">
 <h3 class="anchored" data-anchor-id="overview">Overview</h3>
-<p>This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents one unique customer, detailing metrics relating to their behaviour on the retail website (visits, purchase volume) alongside the specific marketing initiatives they received (ads, coupons, email management fee, and after-sevice). To quantify revenue generation, the data measures gross sales via the <code>purchase_amount</code> field, while supplementary <code>notes</code> capture specific transactional behaviors such as product returns. Overall, these records provide the necessary foundation for assessing marketing return on investment (ROI) across various customer segments.</p>
+<p>This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents one unique customer, detailing metrics relating to their behaviour on the retail website (visits, purchase volume) alongside the specific marketing initiatives they received (ads, coupons, email management fee, and after-sevice).</p>
+<p>To quantify revenue generation, the data measures gross sales via the <code>purchase_amount</code> field, while supplementary <code>notes</code> capture specific transactional behaviors such as product returns. Overall, these records provide the necessary foundation for assessing marketing return on investment (ROI) across various customer segments.</p>
 </section>
 <section id="detailed-description" class="level3">
 <h3 class="anchored" data-anchor-id="detailed-description">Detailed description</h3>
-<p>The dataset</p>
-<div class="cell" data-tbl-colwidths="[60,40]">
-<div id="tbl-summarise-table" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[60,40]">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-summarise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Total retail metrics by customer’s segment
-</figcaption>
-<div aria-describedby="tbl-summarise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 22%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">segment</th>
-<th style="text-align: right;">marketing_expense</th>
-<th style="text-align: right;">total_visits</th>
-<th style="text-align: right;">gross_revenue</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Consumer</td>
-<td style="text-align: right;">12891.48</td>
-<td style="text-align: right;">467</td>
-<td style="text-align: right;">9930.40</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Enterprise</td>
-<td style="text-align: right;">2229.61</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">1423.44</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SMB</td>
-<td style="text-align: right;">6219.11</td>
-<td style="text-align: right;">278</td>
-<td style="text-align: right;">4653.21</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</figure>
-</div>
-</div>
+<p>Overall, the dataset consists of <strong>8</strong> variables and <strong>150</strong> observations. The only variable have “<strong>Date</strong>” type is <code>signup_date</code>, three columns have “<strong>numeric</strong>” type are <code>marketing-spend</code>, <code>visits</code> and <code>purchase_amount</code>; the remaining are recorded under “<strong>character</strong>”.</p>
+<p>Generally, the marketing campaign was successfully engaged on a wide range of customers, from individual consumers to large enterprises. Our website traffic is heavily driven by the B2C market, with individual consumers accounting for nearly 60% of all visitors. SMBs represent a healthy secondary segment at roughly 30% of our customers. However, Enterprise visitors make up just 10% of our traffic, indicating that while our overall commercial reach is solid, our footprint in the high-value enterprise space remains modest.</p>
 <div class="cell fig-cap-location-bottom">
 <div class="cell-output-display">
 <div id="fig-summarise-plot" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
@@ -235,10 +188,123 @@ Figure&nbsp;4: Pie chart for customer in each segment
 </div>
 </div>
 </div>
+<p>While our financial metrics broadly align with our customer base proportions, a deeper segmentation analysis reveals a distinct difference in how each group interacts with our campaign.</p>
+<ul>
+<li><p><strong>Consumer</strong>: consumers account for the best amount of our base clients, therefor, most of our marketing expense were spent here (60.4%). Yet, this group yielded 62% of our gross sales. This means this customer segment is highly efficient and profitable</p></li>
+<li><p><strong>SMB</strong>: despite consuming only 29.1% of the marketing budget, SMBs generated a massive 34.1% of total site visits. However, this segment only contributed 29.1% of gross revenue. This means the campaign successfully get these customers browsing the website, yet it failed to make them purchasing.</p></li>
+<li><p><strong>Enterprise</strong>: Enterprise clients required 10.4% of our marketing expense to generate 8.7% of site visits and 8.9% of gross revenue. This suggests that digital marketing campaigns may not be the most effective channel for acquiring complex Enterprise clients, who typically require direct sales outreach.</p></li>
+</ul>
+<div class="cell">
+<div id="tbl-summarise-table" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-summarise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Total retail metrics by customer’s segment
+</figcaption>
+<div aria-describedby="tbl-summarise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 15%">
+<col style="width: 19%">
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 12%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">segment</th>
+<th style="text-align: right;">marketing_expense</th>
+<th style="text-align: right;">marketing_expense_prop</th>
+<th style="text-align: right;">total_visits</th>
+<th style="text-align: right;">total_visits_prop</th>
+<th style="text-align: right;">gross_revenue</th>
+<th style="text-align: right;">gross_revenue_prop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Consumer</td>
+<td style="text-align: right;">12891.48</td>
+<td style="text-align: right;">60.41</td>
+<td style="text-align: right;">467</td>
+<td style="text-align: right;">57.23</td>
+<td style="text-align: right;">9930.40</td>
+<td style="text-align: right;">62.04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Enterprise</td>
+<td style="text-align: right;">2229.61</td>
+<td style="text-align: right;">10.45</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">8.70</td>
+<td style="text-align: right;">1423.44</td>
+<td style="text-align: right;">8.89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SMB</td>
+<td style="text-align: right;">6219.11</td>
+<td style="text-align: right;">29.14</td>
+<td style="text-align: right;">278</td>
+<td style="text-align: right;">34.07</td>
+<td style="text-align: right;">4653.21</td>
+<td style="text-align: right;">29.07</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 </section>
 <section id="analysis-result" class="level2">
 <h2 class="anchored" data-anchor-id="analysis-result">4. Analysis result</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Assignment1_HoangDuc_36558966_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Assignment1_HoangDuc_36558966_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [150 × 8] (S3: tbl_df/tbl/data.frame)
+ $ customer_id    : chr [1:150] "36558966_c0001" "36558966_c0002" "36558966_c0003" "36558966_c0004" ...
+ $ signup_date    : Date[1:150], format: "2025-12-03" "2025-12-16" ...
+ $ marketing_spend: num [1:150] 79.1 16.1 158.5 42.8 15.8 ...
+ $ visits         : num [1:150] 1 2 7 5 2 9 3 4 1 5 ...
+ $ purchase_amount: num [1:150] 0 76.4 69.1 77.2 0 ...
+ $ segment        : chr [1:150] "Consumer" "Consumer" "Consumer" "Consumer" ...
+ $ notes          : chr [1:150] NA NA NA NA ...
+ $ clean_date     : POSIXct[1:150], format: "2025-12-03" "2025-12-16" ...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  customer_id   signup_date marketing_spend visits purchase_amount segment notes
+  &lt;chr&gt;         &lt;date&gt;                &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 36558966_c00… 2025-12-03             79.1      1             0   Consum… &lt;NA&gt; 
+2 36558966_c00… 2025-12-16             16.1      2            76.4 Consum… &lt;NA&gt; 
+3 36558966_c00… 2025-06-17            159.       7            69.1 Consum… &lt;NA&gt; 
+4 36558966_c00… 2025-12-18             42.8      5            77.2 Consum… &lt;NA&gt; 
+5 36558966_c00… 2024-10-08             15.8      2             0   Consum… &lt;NA&gt; 
+6 36558966_c00… 2026-01-15            285.       9           297.  Consum… &lt;NA&gt; 
+# ℹ 1 more variable: clean_date &lt;dttm&gt;</code></pre>
+</div>
+</div>
 </section>
 
 </main>

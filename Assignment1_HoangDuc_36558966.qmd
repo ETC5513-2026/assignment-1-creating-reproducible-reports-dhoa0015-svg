@@ -112,25 +112,14 @@ clean_data <- data_date_clean
 ```
 
 ### Overview
-This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents one unique customer, detailing metrics relating to their behaviour on the retail website (visits, purchase volume) alongside the specific marketing initiatives they received (ads, coupons, email management fee, and after-sevice). To quantify revenue generation, the data measures gross sales via the `purchase_amount` field, while supplementary `notes` capture specific transactional behaviors such as product returns. Overall, these records provide the necessary foundation for assessing marketing return on investment (ROI) across various customer segments.
+This quarterly dataset captures individual customer engagement and financial transactions to evaluate marketing efficiency and customer value. Each row represents one unique customer, detailing metrics relating to their behaviour on the retail website (visits, purchase volume) alongside the specific marketing initiatives they received (ads, coupons, email management fee, and after-sevice). 
+
+To quantify revenue generation, the data measures gross sales via the `purchase_amount` field, while supplementary `notes` capture specific transactional behaviors such as product returns. Overall, these records provide the necessary foundation for assessing marketing return on investment (ROI) across various customer segments.
 
 ### Detailed description
-The dataset 
+Overall, the dataset consists of **`r ncol(clean_data)`** variables and **`r nrow(clean_data)`** observations. The only variable have "**`r class(clean_data$signup_date)`**" type is `signup_date`, three columns have "**`r class(clean_data$visits)`**" type are `marketing-spend`, `visits` and `purchase_amount`; the remaining are recorded under "**`r class(clean_data$notes)`**".
 
-```{r}
-#| echo: false
-#| label: tbl-summarise-table
-#| tbl-cap: "Total retail metrics by customer's segment"
-#| tbl-colwidths: [60,40]
-sum_by_segments <- clean_data |> 
-    group_by(segment) |> 
-    summarise(
-        marketing_expense = sum(marketing_spend),
-        total_visits = sum(visits),
-        gross_revenue = sum(purchase_amount, na.rm = TRUE)
-    )
-knitr::kable(sum_by_segments, digit = 2)
-```
+Generally, the marketing campaign was successfully engaged on a wide range of customers, from individual consumers to large enterprises. Our website traffic is heavily driven by the B2C market, with individual consumers accounting for nearly 60% of all visitors. SMBs represent a healthy secondary segment at roughly 30% of our customers. However, Enterprise visitors make up just 10% of our traffic, indicating that while our overall commercial reach is solid, our footprint in the high-value enterprise space remains modest. Detailed information address through @fig-summarise-plot
 
 ```{r}
 #| echo: false
@@ -153,4 +142,73 @@ ggplot(mean_by_segments, aes(x = "", y = customer_count, fill = segment)) +
 
 ```
 
+While our financial metrics broadly align with our customer base proportions, a deeper segmentation analysis reveals a distinct difference in how each group interacts with our campaign. Detailed information address through @tbl-summarise-table
+
+- **Consumer**: consumers account for the best amount of our base clients, therefor, most of our marketing expense were spent here (60.4%). Yet, this group yielded 62% of our gross sales. This means this customer segment is highly efficient and profitable
+
+- **SMB**: despite consuming only 29.1% of the marketing budget, SMBs generated a massive 34.1% of total site visits. However, this segment only contributed 29.1% of gross revenue. This means the campaign successfully get these customers browsing the website, yet it failed to make them purchasing.
+
+- **Enterprise**: Enterprise clients required 10.4% of our marketing expense to generate 8.7% of site visits and 8.9% of gross revenue. This suggests that digital marketing campaigns may not be the most effective channel for acquiring complex Enterprise clients, who typically require direct sales outreach.
+
+```{r}
+#| echo: false
+#| label: tbl-summarise-table
+#| tbl-cap: "Total retail metrics by customer's segment"
+
+sum_by_segments <- clean_data |> 
+    group_by(segment) |> 
+    summarise(
+        marketing_expense = sum(marketing_spend),
+        total_visits = sum(visits),
+        gross_revenue = sum(purchase_amount, na.rm = TRUE)) |> 
+    mutate(
+        marketing_expense_prop = marketing_expense / sum(marketing_expense) * 100,
+        total_visits_prop = total_visits / sum(total_visits) * 100,
+        gross_revenue_prop = gross_revenue / sum(gross_revenue) * 100) |> 
+    select(
+    segment, 
+    marketing_expense, marketing_expense_prop,
+    total_visits, total_visits_prop,
+    gross_revenue, gross_revenue_prop
+  )
+
+knitr::kable(sum_by_segments, digit = 2)
+```
+
 ## 4. Analysis result
+
+
+```{r}
+
+ggplot(clean_data, aes(x = marketing_spend, y = purchase_amount)) +
+  geom_point(alpha = 0.6, size = 2) + 
+  geom_smooth(method = "lm", se = TRUE) + 
+  labs(
+    title = "Marketing Spend vs. Purchase Amount",
+    subtitle = "Assessing correlation relationship",
+    x = "Marketing Spend",
+    y = "Purchase Amount"
+  )
+```
+
+
+```{r}
+# Assuming you calculate the total revenue per segment first:
+long_data <- sum_by_segments %>%
+    pivot_longer(
+    cols = c(gross_revenue, marketing_expense), # The columns you want to compare
+    names_to = "metric",                # Creates a new column naming the metric
+    values_to = "amount"                # Creates a new column for the actual numbers
+  )
+
+ggplot(long_data, aes(x = segment, y = amount, fill = metric)) +
+  # position = "dodge" places the bars side-by-side instead of stacking them
+  geom_bar(stat = "identity", position = "dodge") + 
+  labs(
+    title = "Revenue vs. Marketing Spend by Segment",
+    x = "Audience Segment",
+    y = "Amount ($)",
+    fill = "Metric"
+  )
+```
+
