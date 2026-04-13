@@ -1,0 +1,27 @@
+---
+title: "Appendix to the Assignment 1"
+editor: visual
+author: Duc Hoang
+date: today
+format: 
+    html:
+      toc: true
+      theme: litera
+      number-sections: true
+    pdf: 
+      documentclass: article
+      fontsize: 11pt
+      geometry:                 
+        - top=15mm
+        - left=20mm
+        - right=15mm
+        - bottom=15mm
+      number-sections: true
+execute:
+    echo: false
+    warning: false
+    message: false
+---
+In the **Assignment 1**, I have used AI to help me with my code, my file formating and my way around English literacy.
+
+Here are 
