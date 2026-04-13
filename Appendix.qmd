@@ -22,6 +22,17 @@ execute:
     warning: false
     message: false
 ---
-In the **Assignment 1**, I have used AI to help me with my code, my file formating and my way around English literacy.
+While completing the **Assignment 1**, I have utilized AI to help me with my code development, file formating and refining my English literacy.
 
-Here are 
+## Gemini AI prompts:
+Here are some AI prompts that I have used in my assignment:
+
+**Prompt 1**: Asking AI how to best render one `.qmd` file into pdf. How to render file leaving out the white space in the beginning or spatious blank space between each part. [Here](https://gemini.google.com/share/c4f5747dd577)
+
+**Prompt 2**: Asking for grammartic application for the whole report. [Here](https://gemini.google.com/share/58a4453c2e2e)
+
+**Prompt 3**: Asking about dataset missing values. I want to make sure how to deal with the missing data in `purchase_amount` variable. [Here](https://gemini.google.com/share/5c76c2b16afb)
+
+**Prompt 4**: Asking how to change letters' color using `markdown`. [Here](https://gemini.google.com/share/12a85959c64b)
+
+**Prompt 5**: Asking how to make one table having `proportion` metric using R code. [Here](https://gemini.google.com/share/f450623e119a)
